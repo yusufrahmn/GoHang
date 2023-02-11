@@ -19,24 +19,21 @@ app.use(express.urlencoded({ extended: false }));
 
 // Back End
 
-const postEvent = () => null;
-const getEvent = () => null;
+const { postEvent, getEvent } = require('./api/events');
 
-app.post('/events', postEvent);
-app.get('/events/:id', getEvent);
+app.post('/api/events', postEvent);
+app.get('/api/events/:id', getEvent);
 
-const postUser = () => null;
-const login = () => null;
-const putUser = () => null;
+const { postUser, login, putUser } = require('./api/users');
 
-app.post('/events/:id/user', postUser);
-app.get('/events/:id/user/:name', login);
-app.put('/events/:id/user/:name', putUser);
+app.post('/api/events/:id/user', postUser);
+app.get('/api/events/:id/user/:name', login);
+app.put('/api/events/:id/user/:name', putUser);
 
 
 // Front End
 
 
 app.listen(443, () => {
-    console.log('✅ 🫂GoHang is now live on port 443!');
+    console.log('✅ 🫂 GoHang is now live on port 443!');
 });
