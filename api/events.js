@@ -15,6 +15,23 @@ const postEvent = async (req, res) => {
     res.status(200).json(eventData);
 }
 
-const getEvent = async (req, res) => null;
+const getEvent = async (req, res) => {
+    let { id } = req.params;
+    if (!id || !ObjectId.isValid(id)) return res.status(400).json({ error: "Invalid ID" });
+
+    let collectionsList = (await db.listCollections().toArray()).map(e => e.name );
+    if (!collectionsList.includes(id)) return res.status(400).json({ error: "Event Not Found" });
+
+    let { name } = await db.collection('Events').findOne({ _id: new ObjectId(id) });
+    if (!name) return res.status(400).json({ error: "Event Not Found" });
+
+    let event = await db.collection(id);
+    let eventData = await event.find({}, { hashedPassword: 0 }).toArray();
+
+    res.status(200).json({
+        name,
+        data: eventData
+    });
+};
 
 module.exports = { postEvent, getEvent }
