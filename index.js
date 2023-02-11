@@ -26,9 +26,9 @@ app.get('/api/events/:id', getEvent);
 
 const { postUser, login, putUser } = require('./api/users');
 
-app.post('/api/events/:id/user', postUser);
-app.get('/api/events/:id/user/:name', login);
-app.put('/api/events/:id/user/:name', putUser);
+app.post('/api/events/:id/users', postUser);
+app.get('/api/events/:id/users/:name', login);
+app.put('/api/events/:id/users/:name', putUser);
 
 
 // Front End
