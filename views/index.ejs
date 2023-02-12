@@ -6,7 +6,7 @@
     <link rel="stylesheet" href="https://unpkg.com/@picocss/pico@1.*/css/pico.min.css">
     <link rel="stylesheet" href="styles.css">
     <title>GoHang</title>
-    <script src="index.js"></script>
+    <script src="script.js"></script>
   </head>
   <body>
     <header class="container">
@@ -20,7 +20,7 @@
             <p>Find out the best time for an event/meetup and actually make it happen.</p>
             <form onsubmit="newEvent(); return false" class="grid">
                 <input required type="text" name="eventName" id="eventName" placeholder="Event Name" max="128">
-                <input type="submit" value="Make It Happen">
+                <input type="submit" value="Make It Happen" id="eventButton">
             </form>
         </article>
     </main>

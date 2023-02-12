@@ -3,4 +3,15 @@
     --primary-hover: #673ab7;
     --primary-focus: rgba(94, 53, 177, 0.25);
     --primary-inverse: #FFF;
-  }
+}
+
+#burnButton, .redButton {
+  --primary: #e53935 !important;
+  --primary-hover: #d32f2f !important;
+  --primary-focus: rgba(229, 57, 53, 0.125) !important;
+}
+
+#content > span {
+  color: transparent;
+  text-shadow: 0 0 10px rgba(255, 255, 255, 0.5);
+}
