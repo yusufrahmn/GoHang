@@ -14,7 +14,10 @@ const postEvent = async (req, res) => {
     let eventData = await event.find().toArray();
 
     if (!eventReference || !event || !eventData) return res.status(400).json({ error: 'Error Creating Event' });
-    res.status(200).json(eventData);
+    res.status(200).json({
+        name,
+        id: eventReference.insertedId.toString()
+    });
 }
 
 // GET Request / Get Event Data
