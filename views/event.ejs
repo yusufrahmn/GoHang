@@ -6,7 +6,7 @@
     <link rel="stylesheet" href="https://unpkg.com/@picocss/pico@1.*/css/pico.min.css" type="text/css">
     <link rel="stylesheet" href="styles.css"  type="text/css">
     <title>GoHang</title>
-    <script src="script.js"></script>
+    <script src="event.js" type="text/javascript"></script>
   </head>
   <body>
     <header class="container">
@@ -17,11 +17,10 @@
     </header>
     <main class="container">
         <article>
-            <p>Find out the best time for an event/meetup and actually make it happen.</p>
-            <form onsubmit="newEvent(); return false" class="grid">
-                <input required type="text" name="eventName" id="eventName" placeholder="Event Name" max="128">
-                <button id="eventButton">Make It Happen</button>
-            </form>
+            <h3>The best time for <strong>Movie Night @ Karma's</strong> is <strong>on Saturday at 10:30 PM</strong>.</h3>
+            <p>DM this to everyone in the group chat individually: 😈</p>
+            <textarea id="message">Hey! The rest of us are meeting up at Karma's place this Saturday at 10:00 PM to watch 50 Shades of Grey, are you coming too?</textarea>
+            <button id="copyButton" onclick="copy()">Copy</button>
         </article>
     </main>
     <footer class="container">

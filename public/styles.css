@@ -5,6 +5,10 @@
     --primary-inverse: #FFF;
 }
 
+h3 > strong {
+  color: #5e35b1;
+}
+
 #burnButton, .redButton {
   --primary: #e53935 !important;
   --primary-hover: #d32f2f !important;
