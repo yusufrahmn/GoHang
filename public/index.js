@@ -1,5 +1,6 @@
 async function newEvent() {
-    let name = document.getElementById("eventName").value;
+    var name = document.getElementById("eventName").value;
+    console.log(name)
     fetch('/api/events/', {
         method: 'POST',
         headers: {
@@ -9,9 +10,9 @@ async function newEvent() {
         body: JSON.stringify({
             name
         })
-      })
-        .then((res) => { res.json() })
-        .then((data) => {
-            location.href = `/${data.id}`
+      }).then((res) => { 
+        res.json().then((data) => {
+            window.location.href += data.id;
         });
-    }
+    });
+}
