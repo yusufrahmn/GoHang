@@ -33,6 +33,12 @@ app.put('/api/events/:id/users/:name', putUser);
 
 // Front End
 
+app.set('view engine', 'ejs');
+app.use(express.static('public'));
+
+app.get('/', (req, res) => { res.render('index'); })
+app.get('/:id', (req, res) => { res.render('login'); });
+app.get('/:id/calendar', (req, res) => { res.render('calendar'); });
 
 app.listen(443, () => {
     console.log('✅ 🫂 GoHang is now live on port 443!');
