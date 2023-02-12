@@ -1,6 +1,8 @@
 const { db } = require('../index');
 const { ObjectId } = require('mongodb');
 
+// POST Requests / New Event
+
 const postEvent = async (req, res) => {
     let { name } = req.body;
     if (!name) return res.status(400).json({ error: "Enter Name" });
@@ -14,6 +16,8 @@ const postEvent = async (req, res) => {
     if (!eventReference || !event || !eventData) return res.status(400).json({ error: 'Error Creating Event' });
     res.status(200).json(eventData);
 }
+
+// GET Request / Get Event Data
 
 const getEvent = async (req, res) => {
     let { id } = req.params;
