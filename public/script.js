@@ -62,7 +62,7 @@ async function signup() {
       res.json().then((data) => {
         sessionStorage.setItem("username", username);
         sessionStorage.setItem("password", password);
-        window.location.href += '/calendar';
+        window.location.href += 'calendar';
       }) 
     } else if (res.status == 400) {
       res.json().then((data) => error(button, data.error))
@@ -92,7 +92,7 @@ function login(){
       res.json().then((data) => {
         sessionStorage.setItem("username", username);
         sessionStorage.setItem("password", password);
-        window.location.href += '/calendar';
+        window.location.href += 'calendar';
       }) 
     } else if (res.status == 400) {
       res.json().then((data) => error(button, data.error))
