@@ -22,69 +22,84 @@ function error(button, text='Error') {
 
 async function newEvent() {
   let button = loading('eventButton', 'One moment...');
+
   var name = document.getElementById("eventName").value;
-  console.log(name)
   fetch('/api/events/', {
       method: 'POST',
-      headers: {
-        'Content-Type': 'application/json'
-      },
-      redirect: 'follow', 
-      body: JSON.stringify({
-          name
-      })
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ name })
     }).then((res) => { 
       if (res.status == 200) {
         res.json().then((data) => {
           window.location.href += data.id;
         }) 
       } else if (res.status == 400) {
-        alert(res.error)
+        res.json().then((data) => error(button, data.error))
+      } else {
+        error(button)
       }
   }).catch((err) => {
     error(button)
   });
 }
 
-function login(){
-  let username = document.getElementById("userName").value;
+async function signup() {
+  let button = loading('signupBtn', 'One moment...');
+
+  let username = document.getElementById("username").value;
   let password = document.getElementById("password").value;
+  let id = window.location.href.split('/')[3];
 
-  const rq = new XMLHttpRequest();
-  rq.open("GET", "/api/events/:id/users/:name")
-
-  rq.onload = async function(){
-    let resp = await JSON.parse(rq.response);
-    if(resp.status != 200){
-      alert(resp.error)
+  fetch(`/api/events/${id}/users`, {
+    method: 'POST',
+    headers: { 
+      'Content-Type': 'application/json',
+      'Authorization': `Bearer ${password}`
+    },
+    body: JSON.stringify({ name: username })
+  }).then((res) => { 
+    if (res.status == 200) {
+      res.json().then((data) => {
+        sessionStorage.setItem("username", username);
+        sessionStorage.setItem("password", password);
+        window.location.href += '/calendar';
+      }) 
+    } else if (res.status == 400) {
+      res.json().then((data) => error(button, data.error))
+    } else {
+      error(button)
     }
-    else{
-      console.log("succes")
-      let data = await resp.json();
-      window.location.href = "/" + data.id + "/calendar";
-    }
-  }
-
-  rq.onerrer = async function(){
-
-  }
-
-  rq.send(JSON.stringify({ username }))
+  }).catch((err) => {
+    error(button)
+  });
 }
 
-async function signup(){
-  let username = document.getElementById("userName").value;
-  let password = document.getElementById("password").value;
+function login(){
+  let button = loading('loginBtn', 'One moment...');
 
-  const rq = new XMLHttpRequest();
-  rq.open("POST", "/api/events/:id/users")
-  
-  rq.onload = async function(){
-    let resp = await JSON.parse(rq.response);
-    if(resp.status != 200){
-      alert(resp.error)
+  let username = document.getElementById("username").value;
+  let password = document.getElementById("password").value;
+  let id = window.location.href.split('/')[3];
+
+  fetch(`/api/events/${id}/users/${username}`, {
+    method: 'GET',
+    headers: { 
+      'Content-Type': 'application/json',
+      'Authorization': `Bearer ${password}`
     }
-    let data = await resp.json();
-    window.location.href = "/" + data.id + "/calendar";
-  }
+  }).then((res) => { 
+    if (res.status == 200) {
+      res.json().then((data) => {
+        sessionStorage.setItem("username", username);
+        sessionStorage.setItem("password", password);
+        window.location.href += '/calendar';
+      }) 
+    } else if (res.status == 400) {
+      res.json().then((data) => error(button, data.error))
+    } else {
+      error(button)
+    }
+  }).catch((err) => {
+    error(button)
+  });
 }

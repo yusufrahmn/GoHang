@@ -11,7 +11,6 @@
   --primary-focus: rgba(229, 57, 53, 0.125) !important;
 }
 
-#content > span {
-  color: transparent;
-  text-shadow: 0 0 10px rgba(255, 255, 255, 0.5);
+footer > small{
+  opacity: 42%;
 }

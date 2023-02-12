@@ -8,17 +8,26 @@ const auth = async (req, res) => {
     let { id, name } = req.params;
 
     let collectionsList = (await db.listCollections().toArray()).map(e => e.name );
-    if (!collectionsList.includes(id)) return res.status(400).json({ error: "Event Not Found" });
+    if (!collectionsList.includes(id)) {
+        res.status(400).json({ error: "Event Not Found" });
+        return false;
+    }
 
     let event = await db.collection(id);
-    let { hashedPassword } = await event.findOne({ name });
+    let user = await event.findOne({ name });
 
-    if (hashedPassword) {
-        if (!req.headers.authorization) return res.status(400).json({ error: "Password Required" });
+    if (user.hashedPassword) {
+        if (!req.headers.authorization) {
+            res.status(400).json({ error: "Password Required" });
+            return false;
+        }
 
         let password = req.headers.authorization.split(' ').slice(1).join(' ');
-        let correctPassword = await bcrypt.compare(password, hashedPassword);
-        if (!correctPassword) return res.status(400).json({ error: "Incorrect Password" });
+        let correctPassword = await bcrypt.compare(password, user.hashedPassword);
+        if (!correctPassword) {
+            res.status(400).json({ error: "Incorrect Password" });
+            return false;
+        }
     }
 
     return true;
@@ -84,7 +93,8 @@ const postUser = async (req, res) => {
 // GET Request / Login
 
 const login = async (req, res) => {
-    await auth(req, res);
+    let authenticated = await auth(req, res);
+    if (!authenticated) return;
 
     res.status(200).json({
         success: true,

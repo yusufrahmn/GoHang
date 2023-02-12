@@ -9,17 +9,21 @@
     <script src="script.js"></script>
   </head>
   <body>
+    <header class="container">
+      <hgroup>
+          <h1>🫂 GoHang</h1>
+          <h2>Hang with the group chat (fr this time)</h2>
+        </hgroup>
+    </header>
     <main class="container">
-        <p>🫂 GoHang</p>
-
         <article>
             <h2>When are you free? </h2>
-            <form onsubmit="login(); return false">                
-                <input required type="text" name="userName" id="userName" placeholder="Name" max="128">
-                <input type="text" name="password" id="password" placeholder="Password (Optional)" max="256">
+            <form return false>                
+                <input required type="text" name="username" id="username" placeholder="Name" max="128">
+                <input type="password" name="password" id="password" placeholder="Password (Optional)" max="256">
                 <div class="grid">
-                    <input type="submit" value="Enter Availability" id="loginBtn">
-                    <input type="submit" value="Edit Availability" id="signupBtn">
+                    <button id="signupBtn" onclick="signup(); return false">Enter Availability</button>
+                    <button id="loginBtn" onclick="login(); return false">Edit Availability</button>
                 </div>
             </form>
         </article>
