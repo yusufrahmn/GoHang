@@ -28,6 +28,9 @@ const postUser = async (req, res) => {
     }
 
     let event = await db.collection(id);
+    
+    let nameExists = await event.findOne({ name });
+    if (nameExists) return res.status(400).json({ error: "Name Taken" });
     await event.insertOne({
         name,
         hashedPassword,
@@ -42,6 +45,26 @@ const postUser = async (req, res) => {
 
 const login = async (req, res) => {
     let { id } = req.params;
+    let { name } = req.params;
+
+    let collectionsList = (await db.listCollections().toArray()).map(e => e.name );
+    if (!collectionsList.includes(id)) return res.status(400).json({ error: "Event Not Found" });
+
+    let event = await db.collection(id);
+    let { hashedPassword } = await event.findOne({ name });
+
+    if (hashedPassword) {
+        if (!req.headers.authorization) return res.status(400).json({ error: "Password Required" });
+
+        let password = req.headers.authorization.split(' ').slice(1).join(' ');
+        let correctPassword = await bcrypt.compare(password, hashedPassword);
+        if (!correctPassword) return res.status(400).json({ error: "Incorrect Password" });
+    }
+
+    res.status(200).json({
+        success: true,
+        name
+    });
 };
 
 const putUser = async (req, res) => {
